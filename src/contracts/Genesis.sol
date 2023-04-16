@@ -51,7 +51,6 @@ contract Genesis {
     enum statusEnum {
         OPEN,
         APPROVED,
-        REVERTED,
         DELETED,
         PAIDOUT
     }
