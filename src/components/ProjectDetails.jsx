@@ -1,5 +1,6 @@
 import Identicons from 'react-identicons'
 import { FaEthereum } from 'react-icons/fa'
+import { setGlobalState } from '../store'
 
 
 const ProjectDetails = () => {
@@ -78,8 +79,9 @@ const ProjectDetails = () => {
                     className="inline-block px-6 py-2.5 bg-green-600
               text-white font-medium text-xs leading-tight uppercase
               rounded-full shadow-md hover:bg-green-700"
+              onClick={() => setGlobalState('backModal','scale-100')}
                   >
-                    Back Project
+                    Add Donation
                   </button>
             
 
@@ -99,7 +101,7 @@ const ProjectDetails = () => {
                           className="inline-block px-6 py-2.5 bg-gray-600
                           text-white font-medium text-xs leading-tight uppercase
                           rounded-full shadow-md hover:bg-gray-700"
-                         
+                          onClick={() => setGlobalState('updateModal','scale-100')}
                         >
                           Edit
                         </button>
@@ -108,19 +110,12 @@ const ProjectDetails = () => {
                           className="inline-block px-6 py-2.5 bg-red-600
                           text-white font-medium text-xs leading-tight uppercase
                           rounded-full shadow-md hover:bg-red-700"
-                          
+                          onClick={() => setGlobalState('deleteModal','scale-100')}
                         >
                           Delete
                         </button>
                       
-                      <button
-                        type="button"
-                        className="inline-block px-6 py-2.5 bg-gray-600
-                        text-white font-medium text-xs leading-tight uppercase
-                        rounded-full shadow-md hover:bg-gray-700"
-                      >
-                        Project Closed
-                      </button>
+                      
 
               </div>
 

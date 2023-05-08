@@ -1,4 +1,4 @@
-
+import { setGlobalState, useGlobalState } from '../store'
 const Hero = () => {
  
 

@@ -17,7 +17,7 @@ const ProjectTransactions = () => {
                 className="text-sm font-medium
                 px-6 py-4 text-left"
               >
-                Backer
+                Donor
               </th>
               <th
                 scope="col"
@@ -43,7 +43,15 @@ const ProjectTransactions = () => {
             </tr>
           </thead>
           <tbody>
-            
+            <tr className='border-b border-gray-200'>
+              <td className='text-sm font-light px-6 py-4 whitespace-nowrap'>
+                Data
+                {/* <div className='flex justify-start items-center space'>
+                  <Identicon className= "h-10 w-10 object-contain round-full" string="0x23...1e7" size={25}/>
+                </div> */}
+                </td>
+
+            </tr>
           </tbody>
         </table>
       </div>
