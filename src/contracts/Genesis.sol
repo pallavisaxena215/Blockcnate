@@ -17,8 +17,7 @@ contract Genesis {
         APPROVED,
         REVERTED,
         DELETED,
-        PAIDOUT,
-        SADS
+        PAIDOUT
     }
 
     struct statsStruct {
@@ -129,9 +128,7 @@ contract Genesis {
     }
   
   
-    function declarewinner() public pure returns (bool){
-        return true;
-    }
+    
     function deleteProject(uint id) public returns (bool) {
         require(projects[id].status == statusEnum.OPEN, "Project no longer opened");
         require(msg.sender == projects[id].owner, "Unauthorized Entity");
