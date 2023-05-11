@@ -54,8 +54,8 @@ const CreateProject = () => {
           <div className="flex justify-center items-center mt-5">
             <div className="rounded-xl overflow-hidden h-20 w-20">
               <img
-                src=
-                  'https://media.wired.com/photos/5926e64caf95806129f50fde/master/pass/AnkiHP.jpg'
+                src= {imageURL ||
+                  'https://media.wired.com/photos/5926e64caf95806129f50fde/master/pass/AnkiHP.jpg'}
                 
                 alt="project title"
                 className="h-full w-full object-cover cursor-pointer"
