@@ -1,8 +1,9 @@
 import { FaEthereum } from 'react-icons/fa'
 import Identicon from 'react-identicons'
 import Moment from 'react-moment'
+import { truncate } from '../store'
 
-const ProjectTransactions = () => {
+const ProjectBackers = ({ backers }) => {
   return (
     <div className="flex flex-col justify-center items-start md:w-2/3 px-6 mx-auto">
       <div
@@ -17,7 +18,7 @@ const ProjectTransactions = () => {
                 className="text-sm font-medium
                 px-6 py-4 text-left"
               >
-                Donor
+                Backer
               </th>
               <th
                 scope="col"
@@ -43,15 +44,9 @@ const ProjectTransactions = () => {
             </tr>
           </thead>
           <tbody>
-            <tr className='border-b border-gray-200'>
-              <td className='text-sm font-light px-6 py-4 whitespace-nowrap'>
-                Data
-                {/* <div className='flex justify-start items-center space'>
-                  <Identicon className= "h-10 w-10 object-contain round-full" string="0x23...1e7" size={25}/>
-                </div> */}
-                </td>
-
-            </tr>
+            {backers.map((backer, i) => (
+              <Backer key={i} backer={backer} />
+            ))}
           </tbody>
         </table>
       </div>
@@ -59,7 +54,7 @@ const ProjectTransactions = () => {
   )
 }
 
-const Donor = () => (
+const Backer = ({ backer }) => (
   <tr className="border-b border-gray-200">
     <td
       className="text-sm font-light
@@ -68,9 +63,10 @@ const Donor = () => (
       <div className="flex justify-start items-center space-x-2">
         <Identicon
           className="h-10 w-10 object-contain rounded-full shadow-md"
+          string={backer.owner}
           size={25}
         />
-        <span></span>
+        <span>{truncate(backer.owner, 4, 4, 11)}</span>
       </div>
     </td>
     <td
@@ -88,15 +84,15 @@ const Donor = () => (
       className="text-sm font-light
       px-6 py-4 whitespace-nowrap"
     >
-
+      {backer.refunded ? 'Yes' : 'No'}
     </td>
     <td
       className="text-sm font-light
       px-6 py-4 whitespace-nowrap"
     >
-      <Moment fromNow></Moment>
+      <Moment fromNow>{backer.timestamp}</Moment>
     </td>
   </tr>
 )
 
-export default ProjectTransactions
+export default ProjectBackers

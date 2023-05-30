@@ -1,33 +1,51 @@
 import { useState } from 'react'
 import { FaTimes } from 'react-icons/fa'
 import { toast } from 'react-toastify'
+import { createProject } from '../services/blockchain'
 import { useGlobalState, setGlobalState } from '../store'
 
-
 const CreateProject = () => {
-    const [createModal] = useGlobalState('createModal')
-    const [title, setTitle] = useState('')
-    const [description, setDescription] = useState('')
-    const [cost, setCost] = useState('')
-    const [date, setDate] = useState('')
-    const [imageURL, setImageURL] = useState('')
-    
-    const toTimestamp = (dateStr) => {
-      const dateObj = Date.parse(dateStr)
-      return dateObj / 1000
+  const [createModal] = useGlobalState('createModal')
+  const [title, setTitle] = useState('')
+  const [description, setDescription] = useState('')
+  const [cost, setCost] = useState('')
+  const [date, setDate] = useState('')
+  const [imageURL, setImageURL] = useState('')
+
+  const toTimestamp = (dateStr) => {
+    const dateObj = Date.parse(dateStr)
+    return dateObj / 1000
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    if (!title || !description || !cost || !date || !imageURL) return
+
+    const params = {
+      title,
+      description,
+      cost,
+      expiresAt: toTimestamp(date),
+      imageURL,
     }
-  
-    const handleSubmit = async (e) => {
-      e.preventDefault()
-      if (!title || !description || !cost || !date || !imageURL) return
-      const params = {
-        title,
-        description,
-        cost,
-        expiresAt: toTimestamp(date),
-        imageURL,
-      }
-      }
+
+    await createProject(params)
+    toast.success('Project created successfully, will reflect in 30sec.')
+    onClose()
+  }
+
+  const onClose = () => {
+    setGlobalState('createModal', 'scale-0')
+    reset()
+  }
+
+  const reset = () => {
+    setTitle('')
+    setCost('')
+    setDescription('')
+    setImageURL('')
+    setDate('')
+  }
 
   return (
     <div
@@ -43,7 +61,7 @@ const CreateProject = () => {
           <div className="flex justify-between items-center">
             <p className="font-semibold">Add Project</p>
             <button
-              onClick={() => setGlobalState('createModal', 'scale-0')}
+              onClick={onClose}
               type="button"
               className="border-0 bg-transparent focus:outline-none"
             >
@@ -54,9 +72,10 @@ const CreateProject = () => {
           <div className="flex justify-center items-center mt-5">
             <div className="rounded-xl overflow-hidden h-20 w-20">
               <img
-                src= {imageURL ||
-                  'https://media.wired.com/photos/5926e64caf95806129f50fde/master/pass/AnkiHP.jpg'}
-                
+                src={
+                  imageURL ||
+                  'https://media.wired.com/photos/5926e64caf95806129f50fde/master/pass/AnkiHP.jpg'
+                }
                 alt="project title"
                 className="h-full w-full object-cover cursor-pointer"
               />
@@ -91,8 +110,8 @@ const CreateProject = () => {
               type="number"
               step={0.01}
               min={0.01}
-              name="amount"
-              placeholder="Amount (ETH)"
+              name="cost"
+              placeholder="cost (ETH)"
               onChange={(e) => setCost(e.target.value)}
               value={cost}
               required
@@ -146,7 +165,6 @@ const CreateProject = () => {
               placeholder="Description"
               onChange={(e) => setDescription(e.target.value)}
               value={description}
-             
               required
             ></textarea>
           </div>

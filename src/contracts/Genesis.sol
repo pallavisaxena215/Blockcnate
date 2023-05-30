@@ -1,3 +1,4 @@
+//SPDX-License-Identifier: MIT
 pragma solidity ^0.8.7;
 
 contract Genesis {
@@ -126,9 +127,7 @@ contract Genesis {
 
         return true;
     }
-  
-  
-    
+
     function deleteProject(uint id) public returns (bool) {
         require(projects[id].status == statusEnum.OPEN, "Project no longer opened");
         require(msg.sender == projects[id].owner, "Unauthorized Entity");

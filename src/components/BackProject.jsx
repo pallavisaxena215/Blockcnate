@@ -1,12 +1,22 @@
 import { useState } from 'react'
 import { FaTimes } from 'react-icons/fa'
 import { toast } from 'react-toastify'
+import { backProject } from '../services/blockchain'
 import { useGlobalState, setGlobalState } from '../store'
 
+const BackProject = ({ project }) => {
+  const [backModal] = useGlobalState('backModal')
+  const [amount, setAmount] = useState('')
 
-const BackProject = () => {
-    const [backModal] = useGlobalState('backModal')
-    
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    if (!amount) return
+
+    await backProject(project?.id, amount)
+    toast.success('Project backed successfully, will reflect in 30sec.')
+    setGlobalState('backModal', 'scale-0')
+  }
+
   return (
     <div
       className={`fixed top-0 left-0 w-screen h-screen flex
@@ -17,9 +27,9 @@ const BackProject = () => {
         className="bg-white shadow-xl shadow-black
         rounded-xl w-11/12 md:w-2/5 h-7/12 p-6"
       >
-        <form  className="flex flex-col">
+        <form onSubmit={handleSubmit} className="flex flex-col">
           <div className="flex justify-between items-center">
-            <p className="font-semibold">Project Title</p>
+            <p className="font-semibold">{project?.title}</p>
             <button
               onClick={() => setGlobalState('backModal', 'scale-0')}
               type="button"
@@ -32,16 +42,15 @@ const BackProject = () => {
           <div className="flex justify-center items-center mt-5">
             <div className="rounded-xl overflow-hidden h-20 w-20">
               <img
-                src=
+                src={
+                  project?.imageURL ||
                   'https://media.wired.com/photos/5926e64caf95806129f50fde/master/pass/AnkiHP.jpg'
-                
-                alt="project title"
+                }
+                alt={project?.title}
                 className="h-full w-full object-cover cursor-pointer"
               />
             </div>
           </div>
-
-         
 
           <div
             className="flex justify-between items-center
@@ -56,10 +65,11 @@ const BackProject = () => {
               min={0.01}
               name="amount"
               placeholder="Amount (ETH)"
+              onChange={(e) => setAmount(e.target.value)}
+              value={amount}
               required
             />
           </div>
-
 
           <button
             type="submit"
@@ -67,7 +77,7 @@ const BackProject = () => {
             text-white font-medium text-md leading-tight
             rounded-full shadow-md hover:bg-green-700 mt-5"
           >
-            Add Donation
+            Back Project
           </button>
         </form>
       </div>

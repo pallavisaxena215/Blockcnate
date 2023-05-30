@@ -1,21 +1,25 @@
 import { useEffect } from 'react'
 import AddButton from '../components/AddButton'
 import CreateProject from '../components/CreateProject'
-import UpdateProject from '../components/UpdateProject'
 import Hero from '../components/Hero'
 import Projects from '../components/Projects'
+import { loadProjects } from '../services/blockchain'
 import { useGlobalState } from '../store'
 
 const Home = () => {
-  
-    return (
-      <>
-        <Hero />
-        <Projects/>
-        <CreateProject/>
-        <AddButton/>
-      </>
-    )
-  }
+  const [projects] = useGlobalState('projects')
 
-  export default Home
+  useEffect(async () => {
+    await loadProjects()
+  }, [])
+  return (
+    <>
+      <Hero />
+      <Projects projects={projects} />
+      <CreateProject />
+      <AddButton />
+    </>
+  )
+}
+
+export default Home
